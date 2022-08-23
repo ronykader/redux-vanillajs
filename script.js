@@ -1,10 +1,12 @@
 // Initial State
-const initialState = {
+const initialState = [
+  {
     id: 0,
     value: 0,
     incrementBy: 1,
-    decrementBy: 1
-}
+    decrementBy: 1,
+  },
+];
 
 
 
@@ -56,8 +58,8 @@ function nextCounterId(counters){
 function incrementHandeler(id, incrementBy){
     store.dispatch(increment(id,incrementBy));
 }
-function decrementHandeler(id, incrementBy){
-    store.dispatch(decrement(id,incrementBy));
+function decrementHandeler(id, decrementBy){
+    store.dispatch(decrement(id, decrementBy));
 }
 
 
@@ -95,11 +97,10 @@ function decrementHandeler(id, incrementBy){
                     ...counter,
                     value: counter.value + value,
                 };
-            }else{
-                return {
-                    ...counter
-                }
             }
+            return {
+              ...counter,
+            };
         });
     }
 
@@ -111,11 +112,10 @@ function decrementHandeler(id, incrementBy){
                     ...counter,
                     value: counter.value - value,
                 };
-            }else{
-                return {
-                    ...counter
-                }
             }
+            return {
+              ...counter,
+            };
         });
     }
 
@@ -137,56 +137,80 @@ const addCounterButton = document.getElementById('add-counter');
 const resetCounterButton = document.getElementById('reset-counter');
 
 
+const render = () => {
+    const state = store.getState();
+   console.log(typeof state);
 
-function render() {
 
-    let countersMarkup;
-    state.forEach((counter) => {
-        countersMarkup += `<div
-        class="p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow"
-    >
-        <div class="text-2xl font-semibold text-neutral-800" id="counter">0</div>
-        <div class="flex space-x-3">
-            <button
-                class="bg-indigo-400 text-white px-3 py-2 rounded shadow"
-                id="increment"
-            >
-                Increment
-            </button>
-            <button
-                class="bg-red-400 text-white px-3 py-2 rounded shadow"
-                id="decrement"
-            >
-                Decrement
-            </button>
-        </div>
-    </div>`;
-    });
+//    console.log(d);
 
-    // const state = store.getState();
+//    for (let i = 0; i < state.length; i++) {
+//     const element = array[i];
+    
+//    }
 
-    // counterEl.innerText = state.count.toString();
+    let countersMarkup = "";
 
-}
+    // state.forEach((counter) => {
+    //     countersMarkup += `<div
+    //     class="p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow"
+    // >
+    //     <div class="text-2xl font-semibold text-neutral-800" id="counter">${counter.value}</div>
+    //     <div class="flex space-x-3">
+    //         <button
+    //             class="bg-indigo-400 text-white px-3 py-2 rounded shadow"
+    //             onclick="incrementHandler(${counter.id}, ${counter.incrementBy})"
+    //         >
+    //             Increment
+    //         </button>
+    //         <button
+    //             class="bg-red-400 text-white px-3 py-2 rounded shadow"
+    //             id="decrementHandler(${counter.id}, ${counter.incrementBy})"
+    //         >
+    //             Decrement
+    //         </button>
+    //     </div>
+    // </div>`;
+    // });
+
+
+   
+
+    countersContainer.innerHTML = countersMarkup;
+};
+
+// Update UI initially
+render();
+
 
 store.subscribe(render);
 
 
+// Button Click Listeners
+
+addCounterButton.addEventListener('click', () => {
+    store.dispatch(addCounter());
+});
+
+resetCounterButton.addEventListener('click', ()=>{
+    store.dispatch(resetCounters());
+});
+
 
 // Handle Event Listner
-incrementEl.addEventListener('click', ()=>{
+// incrementEl.addEventListener('click', ()=>{
 
-    store.dispatch({
-        type: 'increment'
-    });
-});
+//     store.dispatch({
+//         type: 'increment'
+//     });
+// });
 
 
-decrementEl.addEventListener('click', ()=>{
+// decrementEl.addEventListener('click', ()=>{
 
-    store.dispatch({
-        type: 'decrement'
-    });
-});
+//     store.dispatch({
+//         type: 'decrement'
+//     });
+// });
 
 
